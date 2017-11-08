@@ -1,6 +1,7 @@
 ipython
 notebook
 numpy
+seaborn
 scipy
 scikit-learn
 scikit-image

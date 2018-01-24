@@ -18,41 +18,40 @@
 
 \talksection{Review}
 
-\begin{frame}
-  \phrase{Linear Regression}
+\begin{frame}{Underfitting, overfitting}
+  \cimg{under-overfitting.png}
 \end{frame}
 
 \begin{frame}
-  \phrase{Logistic Regression}
+  \vphrase{Linear Regression}
 \end{frame}
 
 \begin{frame}
-  \phrase{SVM}
+  \vphrase{Logistic Regression}
 \end{frame}
 
 \begin{frame}
-  \phrase{CART}
+  \vphrase{SVM}
 \end{frame}
 
 \begin{frame}
-  \phrase{Random Forests}
+  \vphrase{CART}
 \end{frame}
 
 \begin{frame}
-  \phrase{PCA}
+  \vphrase{Random Forests}
+\end{frame}
+
+\begin{frame}
+  \vphrase{PCA}
 \end{frame}
 
 \talksection{PCA}
 
 \begin{frame}
-  \phrase{Principle component analysis}
-
-  \sphrase{Analyse en composantes principales}
-\end{frame}
-
-\begin{frame}
   \frametitle{Motivation}
-  \phrase{Remember the Curse of Dimensionality?}
+  \only<1>{\vphrase{?}}
+  \only<2>{\vphrase{Remember the Curse of Dimensionality?}}
 \end{frame}
 
 \begin{frame}[t]
@@ -74,37 +73,9 @@
   \begin{itemize}
   \item Exploratory data analysis
   \item Compression
+  \item Visualisation
   \end{itemize}
 \end{frame}
-
-\begin{frame}
-  \frametitle{Also known as}
-  \begin{itemize}
-  \item Discrete Kosambi-Karhunen–Loève transform (KLT) (signal processing)
-  \item Hotelling transform (multivariate quality control)
-  \item Proper orthogonal decomposition (POD) (ME)
-  \item Singular value decomposition (SVD), Eigenvalue decomposition (EVD) (linear algebra)
-  \item Etc.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{History}
-  \begin{itemize}
-  \item Invented by Karl Pearson in 1901
-  \item Invented (again) and named by Harold Hotelling in 1930's
-  \item Also known as\dots
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Also known as}
-
-  \begin{itemize}
-  \item It's a long list, every field uses a different name\dots
-  \end{itemize}
-\end{frame}
-
 
 \talksection{Face Recognition}
 
@@ -155,9 +126,11 @@
   \only<2>{
     Compute the covariance matrix $S$:
     
-    \begin{displaymath}
-      S = \frac{1}{n} \sum_{i=1}^n (x_i-\mu)(x_i-\mu)^T
-    \end{displaymath}
+    \begin{align*}
+      S_{i,j} & = \cov(x_i, x_j) \\
+              & = \E[(x_i-\mu_i)(x_j-\mu_j)^T] \\[7mm]
+      S & = (S_{i,j})
+    \end{align*}
   }
   \only<3-4>{
     Compute the eigenvectors of $S$:

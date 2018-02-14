@@ -1,0 +1,494 @@
+\input ../talk-header.tex
+\title{Machine Learning}
+\subtitle{Anomalies, Music, Time Series}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+%\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\talksection{Review}
+
+\begin{frame}{Underfitting, overfitting}
+  \cimg{under-overfitting.png}
+\end{frame}
+
+\begin{frame}
+  \vphrase{Linear Regression}
+\end{frame}
+
+\begin{frame}
+  \vphrase{Logistic Regression}
+\end{frame}
+
+\begin{frame}
+  \vphrase{SVM}
+\end{frame}
+
+\begin{frame}
+  \vphrase{CART}
+\end{frame}
+
+\begin{frame}
+  \vphrase{Random Forests}
+\end{frame}
+
+\begin{frame}
+  \vphrase{PCA}
+\end{frame}
+
+\begin{frame}
+  \vphrase{Handwriting Recognition}
+\end{frame}
+
+\begin{frame}
+  \vphrase{Clustering}
+\end{frame}
+
+\talksection{Anomaly Detection (not time)}
+
+\begin{frame}
+  \frametitle{Introduction to Anomaly Detection}
+  \only<1>{
+    \begin{itemize}
+    \item Supervised
+    \item Unsupervised
+    \end{itemize}
+  }
+  \only<2>{
+    Supervised anomaly detection:
+    \begin{itemize}
+    \item Training data: normal, abnormal
+    \item Train a classifier
+    \end{itemize}
+    
+    So reduced to existing problem of supervised classification.
+  }
+  \only<3>{
+    Unsupervised anomaly detection:
+    \begin{itemize}
+    \item Mostly, this is clustering
+    \item Increasingly, this is neural networks in advanced applications
+    \end{itemize}
+  }
+  \only<4>{
+    Applications:
+    \begin{itemize}
+    \item Intrusion detection (physical or electronic)
+    \item Fraud detection
+    \item Health monitoring (people, animals, machines)
+    \end{itemize}
+  }
+  \only<5>{
+    Techniques:
+    \begin{itemize}
+    \item Density: kNN, local outlier factor
+    \item SVM
+    \item Clustering: $k$-Means
+    \end{itemize}
+  }
+  \only<6>{
+    kNN techniques and variations
+    \begin{itemize}
+    \item Voronoi diagrams
+    \item aNN
+    \end{itemize}
+  }
+  \only<7>{
+    $k$-Means
+  }
+\end{frame}
+
+\begin{frame}{Local Outlier Factor (LOF)}
+  \only<1>{
+    \begin{itemize}
+    \item Measure average density using kNN
+    \item Points with low local density are suspect outliers
+    \item There is no good thresholding technique
+    \end{itemize}
+  }
+  \only<2> {
+    Let $a$ be an object (point) in the set of samples.
+
+    Let $N_k(a)$ be the set of $k$ nearest neighbours to $a$.
+    
+    Define the $k$-distance from $a$:
+    
+    \begin{displaymath}
+      d_k(a) = \max_{p\in N_k(A)} d(a, p)
+    \end{displaymath}
+  }
+  \only<3> {
+    Define now the reachability distance:
+
+    \begin{displaymath}
+      r_k(a, b) = \max (d_k(a), d(a, b))
+    \end{displaymath}
+
+    In otherwords, $r_k$ is the distance between two points, but is no
+    less than the $k$-distance.
+
+    So all the points in $N_k(a)$ are considered equally $r_k$ distant
+    from $a$.
+
+    \bigskip
+    \purple{Math note: $r_k$ is not a true distance function.}
+  }
+  \only<4> {
+    Define the \textit{local reachability density} of object $a$ by
+
+    \begin{displaymath}
+      \mbox{lrd}(a) = \frac{1}{\left(
+          \frac{
+            \sum\limits_{b\in N_k(a)} r_k(a, b)
+          }
+          {|N_k(A)|}
+        \right)}
+      =
+      \left(
+      \frac
+      {|N_k(A)|}
+      {
+        \displaystyle\sum_{b\in N_k(a)} r_k(a, b)
+      }
+      \right)
+    \end{displaymath}
+
+    This is the (inverse of the) average reachability distance of the
+    $k$ nearest neighbours.
+  }
+  \only<5> {
+    The
+
+    \begin{displaymath}
+      \mbox{LOF}_k(a) = \left(
+        \frac
+        {\sum_{b\in N_k(a)} \frac{\mbox{lrd}(b)}{\mbox{lrd}(a)}}
+        {|N_k(a)|}
+        \right)
+        =
+        \left(
+          \frac
+          {\sum_{b\in N_k(a)} \mbox{lrd}(b)}
+          {|N_k(a)|\quad \mbox{lrd}(a)}
+        \right)
+      \end{displaymath}
+
+      \bigskip
+      \blue{Interpretation:}
+      \begin{itemize}
+      \item \blue{1} indicates a point is comparable to its neighbours
+      \item \blue{$<1$} indicates more densely packed than its neighbours
+      \item \blue{$>1$} indicates more sparsely packed than its neighbours
+      \end{itemize}
+      
+  }
+  \only<6>{
+    \cimghh{LOF-idea.png}
+    \vspace{-3cm}
+    \prevwork{By Chire - Own work, Public Domain,
+      \url{https://commons.wikimedia.org/w/index.php?curid=10423954}}
+  }
+  \only<7>{
+    \cimghh{LOF-example.png}
+    \prevwork{By Chire - Own work, Public Domain,
+      \url{https://commons.wikimedia.org/w/index.php?curid=10423954}}
+  }
+  \only<8>{
+    Advantages: intuitive, often works well (e.g., intrusion detection)
+
+    Disadvantages: fails at higher dimension (curse of
+    dimensionality), hard to interpret
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Examples}
+  \only<1>{
+    \vphrase{ping times}
+  }
+  \only<2>{
+    \vphrase{httpd response times}
+  }
+  \only<3>{
+    \vphrase{single/multiple host access abuse (DOS/DDOS)}
+  }
+  \only<4>{
+    \vphrase{bank card fraud}
+  }
+  \only<5>{
+    \vphrase{spam}
+  }
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\talksection{Break}
+
+\begin{frame}
+  % https://www.pexels.com/photo/macro-shot-of-purple-flower-144282/
+  % https://static.pexels.com/photos/144282/pexels-photo-144282.jpeg
+  % CC0 license
+  \cimgwb{blue-flowers.jpg}
+  \vspace{-9cm}
+  \wphrase{questions?}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\talksection{Break}
+
+\talksection{Music}
+
+\begin{frame}
+  \cimghh{fourier-1.png}
+  \prevwork{\url{http://www.toptal.com/algorithms/shazam-it-music-processing-fingerprinting-and-recognition}}
+\end{frame}
+
+\begin{frame}
+  \cimghh{fourier-2.png}
+  \prevwork{\url{https://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf}}
+\end{frame}
+
+\begin{frame}
+  \cimghh{fourier-hash.png}
+  \prevwork{\url{https://www.ee.columbia.edu/~dpwe/papers/Wang03-shazam.pdf}}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\talksection{Break}
+
+\begin{frame}
+  % https://www.pexels.com/photo/architecture-artificial-attraction-garden-26689/
+  % https://static.pexels.com/photos/26689/pexels-photo-26689.jpg
+  % CC0 license
+  \cimgwb{garden-by-the-bay.jpg}
+  \vspace{-9.5cm}
+  \phrase{\hspace{10cm}\red{questions?}}
+\end{frame}
+
+\talksection{Time Series}
+
+\begin{frame}
+  \frametitle{Introduction to time series}
+  \only<1>{
+    \purple{This is hard, but it depends on your goals.  And on context.}
+  }
+  \only<2>{
+    Definition (discrete time series):
+
+    \begin{displaymath}
+      \{s_t\mid t\in\mathbb{R}^+\wedge s\in\mathbb{R}\}
+    \end{displaymath}
+
+    \purple{(though $s$ in any vector space is fine)}
+  }
+  \only<3>{
+    Examples domains:
+    \begin{itemize}
+    \item Weather
+    \item Economics
+    \item Industry (e.g., factories)
+    \item Medicine
+    \item Web
+    \item Biological processes
+    \end{itemize}
+  }
+  \only<4>{
+    Why?
+    \begin{itemize}
+    \item Predict
+    \item Control
+    \item Understand
+    \item Describe
+    \end{itemize}
+  }
+  \only<5>{
+    Some strategies:
+    \begin{itemize}
+    \item Differencing:\\ \hspace{1cm}
+      $y_t' = y_t - y_{t-1}$ \\[2mm]
+    \item Second-order differencing: \\ \hspace{1cm}
+      $y_t'' = (y_t - y_{t-1}) - (y_{t-1} - y_{t-2}) = y_t - 2y_{t-1}
+      + y_{t-2}$
+    \end{itemize}
+  }
+  \only<6>{
+    Some strategies:
+    \begin{itemize}
+    \item Clustering
+    \item Hidden Markov Models (HMM)
+    \item Recurrent neural networks (RNN)
+    \item Autoregressive integrated moving average (ARIMA)
+      \begin{itemize}
+      \item Generalisation of autoregressive moving average (ARMA)
+        model
+      \item Regress on series' own lag
+      \end{itemize}
+
+    \end{itemize}
+  }
+  \only<7>{
+    One model:
+    \begin{displaymath}
+      s_t = g(t) + \phi_t
+    \end{displaymath}
+
+    where
+    \begin{itemize}
+    \item[] $g(t)$ is deterministic: signal (or trend)
+    \item[] $\phi_t$ is stochastic noise
+    \end{itemize}
+  }
+  \only<8>{
+    Variation types:
+    \begin{itemize}
+    \item Trend ($g$)
+    \item Seasonal effect ($g$)
+    \item Irregular fluctuation (residuals: $\phi$)
+    \end{itemize}
+  }
+  \only<9>{
+    \cimghh{decomposition.png}
+    \vspace{-8mm}
+    \prevwork{\url{http://www.ulb.ac.be/di/map/gbonte/ftp/time_ser.pdf}}
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction to time series}
+
+  Some easy things to try
+  
+  \begin{itemize}
+  \item Introduce features to break out seasonality
+  \item Introduce lags as features
+  \item Some domain-specific transformation
+  \end{itemize}
+\end{frame}
+
+
+\talksection{HMM}
+
+\begin{frame}
+  \phrase{``simplest dynamic Bayesian network''}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Markov Chains}
+  \only<1>{
+    A \textbf{Discrete time Markov chain (DTMC)} is a random process that
+    undergoes state transitions.
+  }
+  \only<2>{
+    \begin{displaymath}
+      \begin{bmatrix}
+        x_{11} & x_{12} & \cdots & x_{1n} \\[2mm]
+        x_{21} & x_{22} & \cdots & x_{2n} \\[2mm]
+        \vdots & & \ddots & \vdots \\[2mm]
+        x_{n1} & x_{n2} & \cdots & x{nn}
+      \end{bmatrix}
+      \begin{bmatrix}
+        v^{(i)}_1 \\[2mm]
+        v^{(i)}_2 \\[2mm]
+        \vdots \\[2mm]
+        v^{(i)}_n
+      \end{bmatrix}
+      =
+      \begin{bmatrix}
+        v^{(i+1)}_1 \\[2mm]
+        v^{(i+1)}_2 \\[2mm]
+        \vdots \\[2mm]
+        v^{(i+1)}_n
+      \end{bmatrix}
+    \end{displaymath}
+  }
+  \only<3>{
+    \begin{displaymath}
+      Xv_i = v_{i+1}
+    \end{displaymath}
+  }
+  \only<4>{
+    Examples:
+    \begin{itemize}
+    \item Random walks
+    \item Weather (first approximation in many places)
+    \item Thermodynamics
+    \item Queuing theory (so also telecommunications)
+    \item Spam
+    \end{itemize}
+  }
+  \only<5>{
+    Properties:
+    \begin{itemize}
+    \item Stochastic process
+    \item Memoryless (``Markov property'')
+    \end{itemize}
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{HMM's}
+  \only<1>{
+    \begin{itemize}
+    \item State is not visible
+    \item Output of state is visible
+    \end{itemize}
+
+    Examples: noisy sensor, medical diagnosis
+  }
+  \only<2>{
+    What we have:\vspace{-2.5mm}
+    \begin{itemize}
+    \item State space $S = \{s_1, \dotsc, s_n \}$
+    \item Observation space $O = \{o_1, \dotsc, o_k \}$
+    \item Transition matrix $A$ of size $n\times n$
+    \item Emission matrix $B$ of size $n\times k$
+    \item Initial state probabilities $\pi = \{\pi_1, \dotsc, \pi_n \}$
+    \item A sequence of observations $X=\{x_1, \dotsc x_T \}$
+    \end{itemize}
+
+    Here\vspace{-2.5mm}
+    \begin{itemize}
+    \item $y_t = i \iff $ observation at time $t$ is $o_i$
+    \item $\Pr(x_1 = s_i) = \pi_i$
+    \end{itemize}
+
+    We want the sequence of states $X=\{x_1, \dotsc, x_T \}$.
+
+  }
+  \only<3>{
+    Some pointers to learn more about HMM:
+    \begin{itemize}
+    \item Forward-Backward Algorith
+    \item Viterbi Decoding
+    \item Baum-Welch Algorithm
+    \end{itemize}
+  }
+  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\talksection{Break}
+
+\begin{frame}
+  % https://www.pexels.com/photo/3-tan-short-coated-puppy-on-gray-dirt-during-daytime-26128/
+  % https://static.pexels.com/photos/26128/pexels-photo-26128.jpg
+  % CC0 license
+  \cimgwb{dogs.jpg}
+  \vspace{-10cm}
+  \phrase{questions?}
+\end{frame}
+
+
+\end{document}

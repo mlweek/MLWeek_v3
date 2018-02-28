@@ -1,0 +1,13 @@
+more time series
+    https://www.analyticsvidhya.com/blog/2016/02/time-series-forecasting-codes-python/
+    https://machinelearningmastery.com/arima-for-time-series-forecasting-with-python/
+    https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/
+    https://machinelearningmastery.com/time-series-forecasting-supervised-learning/
+    https://machinelearningmastery.com/convert-time-series-supervised-learning-problem-python/
+
+    https://jakevdp.github.io/blog/2013/08/28/understanding-the-fft/
+
+recommendation
+NLP
+
+more images?

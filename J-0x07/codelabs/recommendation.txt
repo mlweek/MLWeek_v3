@@ -1,0 +1,22 @@
+La librarie surprise est basée sur scikit-learn est implémente
+plusieurs algorithmes de recommandation.
+
+Elle comprend plusieurs datasets, y compris MovieLens.
+
+    http://surpriselib.com/
+    https://surprise.readthedocs.io/en/stable/getting_started.html
+
+Commencez (après avoir lu un peu sur la librarie) ici et générez des
+recommendations pour un groupe d'utilisateurs.
+
+    https://surprise.readthedocs.io/en/stable/FAQ.html
+
+    "How to get the top-N recommendations for each user"
+    
+
+    Cet article est commercial, mais peut être consulté -- au moins
+    brièvement -- gratuitment.  Il est plutôt bien écrit et introduit
+    le MovieLens dataset.
+
+    https://www.analyticsvidhya.com/blog/2016/06/quick-guide-build-recommendation-engine-python/
+    

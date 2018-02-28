@@ -1,0 +1,33 @@
+La librarie NLTK est un des standards pour le traitement automatique des langues.
+
+1.  Téléchargez-la.  Astuce : c'est du python, donc virtualenv + pip
+    install sur linux.
+
+    http://www.nltk.org/
+
+2.  Prenez un texte, par exemple un article de presse (pas trop court,
+    sinon les algos que nous avons discuté sont un peu faible).
+    Résumez-le.  Répétez.
+
+    Astuces :
+      - word_tokenize()
+      - fréquences
+
+    Pour tricher / chercher de la motivation, voilà quelques
+      suggestions.  Le premier a fait une version un peu simplifiés de
+      Gillick & Favre.
+
+      https://dev.to/davidisrawi/build-a-quick-summarizer-with-python-and-nltk
+      https://glowingpython.blogspot.fr/2014/09/text-summarization-with-nltk.html
+      https://github.com/vgel/summarize.py
+      https://glowingpython.blogspot.fr/2013/07/combining-scikit-learn-and-ntlk.html
+
+   Pour voir quelque chose un peu plus sophistiqué, Remi Bois a
+   implémente Gillick & Favre ici :
+
+     https://github.com/sildar/potara
+
+
+Pour aller plus loin, regardez un peu sur l'analyse de sentiment :
+
+    http://www.nltk.org/howto/sentiment.html

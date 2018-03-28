@@ -8,3 +8,5 @@ scikit-image
 matplotlib
 mahotas
 pandas
+tensorflow
+keras

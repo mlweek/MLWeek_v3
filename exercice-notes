@@ -1,0 +1,21 @@
+
+    - Define the question of interest
+
+        Où tu décrirais la problématique à résoudre
+
+    - Get, clean, explore the data
+
+        En quelque lignes de commande sur les dataframe, tu nous permettrais de décrire le jeu de données de façon opportune, de façon à orienter notre exploration vers la sélection du ou des algos ad hoc.
+
+    - Fit statistical models
+
+        Où tu développes le potentiel de l'algo choisi (à l'image que ce que tu fais déjà dans les scripts juniper)
+
+    - Communicate the results
+
+        Là, tu ferais le focus sur la partie affichage du résultat, en proposant des affichages de plus en plus perfectionnés au fur et à mesure de notre avancée dans les cours
+
+    - Make your analyss reproducible
+
+        Cette partie là est encore floue pour moi, je ne vois pas ce qu'il faudrait y mettre.
+

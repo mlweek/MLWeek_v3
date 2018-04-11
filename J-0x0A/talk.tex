@@ -1,0 +1,301 @@
+\input ../talk-header.tex
+\usepackage{centernot}
+\usepackage[]{algorithm2e}
+\title{Machine Learning}
+\subtitle{Neural Networks, part 2; and the beginning}
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+%\beamerdefaultoverlayspecification{<+->}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\talksection{Backpropagation}
+
+\begin{frame}{Backpropagation}
+  \DontPrintSemicolon
+  \begin{algorithm}[H]
+    \SetKwFunction{algo}{algo}\SetKwFunction{proc}{proc}
+    \SetKwProg{myalg}{Algorithm}{}{}
+    Assign small random weights \;
+    \While{not converged}{
+      Feed forward to find values at each node\;
+      Backpropagate to correct weights:\;
+      \myalg{\algo{}}{
+        Compute partial derivatives\;
+        Use partial derivatives to compute gradient\;
+        Use gradient to update weights (classic gradient descent)\;
+      }
+    }
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}{Backpropagation}
+  Newton's Method
+  \cimggg{newton.png}
+\end{frame}
+
+\begin{frame}{Backpropagation}
+  Newton's Method
+  
+  \begin{displaymath}
+    x_{n+1}
+    = x_n - \frac{f(x_n)}{f'(x_n)}
+    = x_n - \frac{f(x_n)}{\frac{\DD{f}}{\DD{x}} \big(x_n\big) }
+  \end{displaymath}
+
+  \only<2>{
+    \vspace{6mm}
+  or
+  \begin{displaymath}
+    y = \frac{\DD{f}}{\DD{x}} \Big(x_n\Big)(x-x_n) + f(x_n)
+  \end{displaymath}
+  }
+\end{frame}
+
+\begin{frame}
+  \begin{minipage}{.5\linewidth}
+    \cimgh{ann2.png}    
+  \end{minipage}%
+  \begin{minipage}{.5\linewidth}
+    \begin{displaymath}
+      \pdv{z}{x} = \pdv{z}{y}\pdv{y}{x}
+    \end{displaymath}
+  \end{minipage}
+\end{frame}
+
+\talksection{Perceptron}
+
+\begin{frame}{Vocabulary}
+  \only<1>{
+    \vphrase{Activation function}
+
+    \centerline{How the neuron decides when to fire.}
+  }
+  \only<2>{
+    \begin{minipage}{0.5\linewidth}
+      \cimg{sigmoid.png}
+    \end{minipage}%
+    \begin{minipage}{0.5\linewidth}
+      \vphrase{Sigmoid}
+
+      \vspace{1cm}
+      \prevwork{\tiny By Qef (talk) - Created from scratch with gnuplot, Public Domain,\\[-3mm]
+        \url{https://commons.wikimedia.org/w/index.php?curid=4310325}}
+    \end{minipage}
+  }
+  \only<3>{
+    \begin{minipage}{0.5\linewidth}
+      \cimg{relu.png}
+    \end{minipage}%
+    \begin{minipage}{0.5\linewidth}
+      \phrase{ReLU and Softmax}
+
+      \vspace{5mm}
+      \centerline{Rectified Linear Unit}
+
+      \vspace{1cm}
+      \prevwork{\tiny Wikimedia Commons}
+    \end{minipage}
+  }
+  \only<4>{
+    \begin{minipage}{0.7\linewidth}
+      \cimg{max-pooling.png}
+    \end{minipage}%
+    \begin{minipage}{0.3\linewidth}
+      \phrase{Pooling}
+
+      \vspace{5mm}
+      \centerline{max pooling}
+      \centerline{downsampling}
+    \end{minipage}
+  }
+  \only<5>{
+    \begin{minipage}{0.7\linewidth}
+      \cimg{dropout.png}
+    \end{minipage}%
+    \begin{minipage}{0.3\linewidth}
+      \vphrase{Dropout}
+    \end{minipage}
+  }
+\end{frame}
+
+\talksection{Multilayer Perceptron (MLP)}
+
+\begin{frame}{MLP}
+  \begin{enumerate}
+  \item Multiple layers
+  \item First layer is linear
+  \item Later layers use non-linear activation functions (typically sigmoid)
+  \item Feedforward
+  \item Can find non-linear separators
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{MLP}
+  \only<1>{\cimgh{perceptron-1.png}}
+  \only<2>{\cimgh{perceptron-2.png}}
+  \only<3>{\cimgh{perceptron-3.png}}
+\end{frame}
+
+\begin{frame}{MLP}
+  \only<1>{\vphrase{Example: MNIST}}
+  \only<2>{\vphrase{Example: simple classification tasks}}
+  \only<3>{\vphrase{Example: time series}}
+\end{frame}
+\talksection{Recurrent Neural Networks}
+
+\begin{frame}
+  \only<1-2>{\vphrase{loops}}
+  \only<2>{\centerline{so also memory}}
+  \only<3>{\cimgo{recurrent-1.png}
+
+    \prevwork{\url{https://colah.github.io/posts/2015-08-Understanding-LSTMs/}}
+  }
+  \only<4>{\cimgo{recurrent-2.png}
+
+        \prevwork{\url{https://colah.github.io/posts/2015-08-Understanding-LSTMs/}}
+      }
+\end{frame}
+
+
+\talksection{ConvNets}
+% Convolutional Neural Networks
+
+\begin{frame}{Tensors}
+  \only<1>{
+    \begin{displaymath}
+      \left(
+        \begin{array}{lll}
+          1 & 2 & 3 \\
+          4 & 5 & 6
+        \end{array}
+      \right)
+    \end{displaymath}
+  }
+  \only<2>{
+    \begin{displaymath}
+      \left(
+        \begin{array}{lll}
+          \left(
+          \begin{array}{l}
+            1 \\ 2
+          \end{array}
+          \right)
+       & \left(
+         \begin{array}{l}
+           3 \\ 4
+          \end{array}
+          \right) & \left(
+          \begin{array}{l}
+            5 \\ 6
+          \end{array}
+          \right) \\[5mm]
+          
+          \left(
+          \begin{array}{l}
+            7 \\ 8
+          \end{array}
+          \right) & \left(
+          \begin{array}{l}
+            9 \\ 10
+          \end{array}
+          \right) & \left(
+          \begin{array}{l}
+            11 \\ 12
+          \end{array}
+          \right)
+        \end{array}
+      \right)
+    \end{displaymath}
+  }
+  \only<3>{\cimgh{tensor.png}}
+\end{frame}
+
+\begin{frame}{ConvNets}
+  \only<1>{\vphrase{Convolutional Neural Networks}}
+  \only<2>{\vphrase{The neurons are convolutions}}
+  \only<3>{\cimgh{convnet-1.png}}
+  \only<4>{\cimgh{convnet-2.png}}
+  \only<5>{\cimg{convnet-3.png}}
+  \only<6>{\vphrase{Example: images}}
+\end{frame}
+
+
+\talksection{Transfer Learning}
+
+\begin{frame}
+  \begin{itemize}
+  \item Pre-trained models
+  \item Only retrain the classifier at the end
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  Example: PlacesVGG (2015)
+
+  \vspace{5mm}
+  
+  \blue{PlacesVGG (Places2 2015)}
+
+  \url{https://static.turi.com/models/.../places_vgg_16-1.0.tar.gz}
+  
+  This model is trained with VGG-16 architechture, on the Places2
+  dataset. The Places2 dataset contains 8 million images of 400
+  different scene categories. More details about the dataset can be
+  found at http://places2.csail.mit.edu/
+
+  \vfill
+  \prevwork{\tiny\url{https://turi.com/products/create/docs/graphlab.mxnet.pretrained_image_model.html}}
+\end{frame}
+
+\talksection{The Beginning}
+
+\begin{frame}[t]
+  \frametitle{Perspectives}
+
+  \vspace{1cm}
+  \begin{itemize}
+  \item Data science is iterative
+  \item Start simple, get better
+  \end{itemize}
+
+  \only<2>{\blue{Sometimes no business case to do more.}}
+\end{frame}
+
+\begin{frame}[t]
+  \frametitle{Risks}
+
+  \vspace{1cm}
+  \begin{itemize}
+  \item Nothing is guaranteed\gray{, but competitors are innovating and experimenting}
+  \item Examples from past projects can help, but often leads to ``this is different''
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+  \frametitle{Success}
+  \vspace{2cm}
+  \centerline{\blue{Think early about how to measure success.}}
+  \vspace{1cm}
+  \only<2>{The definition of success will evolve.}
+\end{frame}
+
+\begin{frame}
+  % https://www.pexels.com/photo/human-sky-nature-mountain-26504/
+  % https://static.pexels.com/photos/26504/pexels-photo.jpg
+  % CC0 license
+  \cimgwb{guy-50.jpg}
+  \vspace{-10.2cm}
+  \phrase{questions?\hspace{34mm}}
+\end{frame}
+
+\end{document}

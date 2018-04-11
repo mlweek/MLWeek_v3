@@ -10,3 +10,7 @@ mahotas
 pandas
 tensorflow
 keras
+h5py
+Pillow
+pydot
+graphviz

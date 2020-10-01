@@ -53,20 +53,15 @@
 \begin{frame}
   \frametitle{Course structure}
   \only<1>{
-    Ten afternoons:
+    Three full days:
     \begin{itemize}
-    \item     8, 22 Nov
-    \item     6, Dec
-    \item     10, 24 Jan
-    \item     14, 28 Feb
-    \item     14, 28 Mar
-    \item     11 Apr
+    \item     2, 7, 16 octobre
     \end{itemize}
   }
   \only<2>{
     \begin{itemize}
     \item Email \url{jeff@p27.eu}
-    \item Mailing list: \url{ml-week-2017-11@googlegroups.com}
+    % \item Mailing list: \url{ml-week-2017-11@googlegroups.com}
     \item Github: \url{https://github.com/mlweek/MLWeek_v3}
     \end{itemize}
   }
@@ -220,6 +215,18 @@
   }
 \end{frame}
 
+\begin{frame}{Variables and statistics}
+  \begin{itemize}
+  \item Input: features (``explanatory variables'')
+  \item Output: response variable
+  \item Training set (learn parameters)
+  \item Test Set (check learned parameters)
+  \item Validation set (check learned hyperparameters)
+  \item Cross validation (and jack knife and \dots)
+  \item Bias and variance (picture coming up)
+  \end{itemize}
+\end{frame}
+
 \begin{frame}
   \frametitle{Variable types}
   \cimg{variable-types.png}
@@ -275,27 +282,43 @@
 \begin{frame}
   \frametitle{Population statistics}
 
-  \soloo{1}{\textbf{Deviation} is distance from mean.}
-  \soloo{2}{\textbf{Variance} is mean square of deviations}
-  \soloo{3}{\textbf{Standard deviation} is square root of variance}
+  \only<1>{\vfill\centerline{\textbf{Mean} is just a sum.}
+    \begin{displaymath}
+      \mu = \frac{1}{N} \sum_{i=1}^N x_i
+    \end{displaymath}
 
-  \only<4>{
-    \vfill
+    \bigskip
+    \centerline{This is a special case ($w_i=1$) of the weighted mean:}
     \begin{displaymath}
-      s^2 = \frac{(\overline x - x_1)^2 + \dotsb (\overline x - x_n)^2}{n-1}
+      \mu = \frac{1}{\sum w_i} \cdot \sum_{i=1}^N w_i x_i
     \end{displaymath}
   }
-  \only<5>{
-    \vfill
+  \only<2>{\vfill\centerline{\textbf{Deviation} is distance from mean.}
     \begin{displaymath}
-      \sigma^2 = \frac{(\overline x - x_1)^2 + \dotsb (\overline x - x_n)^2}{n}
+      \mu = \frac{1}{N} \sum_{i=1}^N x_i
+    \end{displaymath}
+    
+    \begin{displaymath}
+      \mbox{Deviation of } x_i = \mu - x_i
     \end{displaymath}
   }
-  \only<6>{
+  \only<3>{\vfill\centerline{\textbf{Variance} is the mean square of deviations}
+    \begin{displaymath}
+      \mu = \frac{1}{N} \sum_{i=1}^N x_i
+    \end{displaymath}
+    
+    \begin{displaymath}
+      \mbox{Var}(X) = \sigma^2 = \frac{1}{N} \sum_{i=1}^N (\mu - x_i)^2
+    \end{displaymath}
+  }
+  \only<4>{\vfill\centerline{\textbf{Standard deviation} is square root of variance}
     \vfill
     \begin{displaymath}
-      \mbox{Var}(X) = \sigma^2 = (\overline x - x_1)^2 \Pr(X=x_1) + \dotsb
-        (\overline x - x_n)^2 \Pr(X=x_n)
+      \mu = \frac{1}{N} \sum_{i=1}^N x_i
+    \end{displaymath}
+    
+    \begin{displaymath}
+      \sigma = \sqrt{\mbox{Var}(X)} = \sqrt{\sigma^2} = \sqrt{\frac{1}{N} \sum_{i=1}^N (\mu - x_i)^2}
     \end{displaymath}
   }
 \end{frame}
@@ -388,6 +411,12 @@
         v_n
       \end{pmatrix}
       \in \mathbb{R}^n
+    \end{displaymath}
+
+    \bigskip
+    This is all mostly for convenience (not getting lost).  Remember weighted averages?
+    \begin{displaymath}
+      \mu = w^T\cdot x
     \end{displaymath}
   }
   \only<2>{
